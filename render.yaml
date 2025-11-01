@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: fb-share-booster
+    env: docker
+    plan: free
+    buildCommand: ""
+    startCommand: "php -S 0.0.0.0:$PORT -t ."
+    dockerfilePath: ./Dockerfile
