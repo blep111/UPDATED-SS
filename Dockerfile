@@ -1,11 +1,9 @@
 FROM php:8.2-apache
 
-RUN docker-php-ext-install curl
-
-# Enable Apache rewrite module (optional but safer)
+# Enable Apache rewrite module (optional but safe)
 RUN a2enmod rewrite
 
-# Copy app files
+# Copy all app files
 COPY . /var/www/html/
 
 # Set working directory
