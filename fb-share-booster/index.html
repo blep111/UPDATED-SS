@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHARE BOOSTER</title>
+<style>
+body {
+  background: radial-gradient(circle at 20% 20%, #000000, #1a001a 70%);
+  color: #ff7518;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  padding: 30px;
+}
+h1 {
+  font-size: 2.3em;
+  text-shadow: 0 0 10px #ff7518, 0 0 20px #ff7518;
+}
+textarea, input {
+  width: 90%;
+  max-width: 400px;
+  margin: 10px auto;
+  display: block;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  background: #1a1a1a;
+  color: #ff7518;
+  font-size: 1em;
+}
+button {
+  background: #ff7518;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  font-weight: bold;
+  transition: 0.3s;
+}
+button:hover { background: #ff9a3c; }
+#result {
+  margin-top: 20px;
+  white-space: pre-line;
+  color: #fff;
+  background: #00000055;
+  padding: 10px;
+  border-radius: 8px;
+}
+</style>
+</head>
+<body>
+  <h1>SHARE BOOSTER</h1>
+  <p>Paste one or more Facebook cookies (each on a new line):</p>
+  <textarea id="cookies" rows="6" placeholder="Paste cookies here..."></textarea>
+
+  <input type="text" id="postLink" placeholder="Facebook post URL">
+  <input type="number" id="shareCount" placeholder="Number of shares per account" value="1" min="1">
+  <button onclick="startSharing()">Start Sharing 🚀</button>
+  <div id="result"></div>
+
+<script>
+async function startSharing() {
+  const cookies = document.getElementById('cookies').value.trim();
+  const postLink = document.getElementById('postLink').value.trim();
+  const shareCount = document.getElementById('shareCount').value;
+
+  if (!cookies || !postLink) {
+    alert('Please input cookies and post link!');
+    return;
+  }
+
+  document.getElementById('result').textContent = 'Processing...';
+
+  try {
+    const res = await fetch('api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cookies, postLink, shareCount })
+    });
+    const data = await res.text();
+    document.getElementById('result').textContent = data;
+  } catch (err) {
+    document.getElementById('result').textContent = 'Error: ' + err.message;
+  }
+}
+</script>
+</body>
+</html>
